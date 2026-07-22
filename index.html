@@ -3,241 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CODE MASTER - Absensi Ekstrakurikuler</title>
-    <!-- Tailwind CSS CDN untuk styling cepat & modern -->
+    <title>CODE MASTER - Absensi Sistem NIS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        
-        /* Navy Blue Theme sesuai gambar */
-        .bg-navy-900 { bg-color: #0f172a; } 
-        .text-navy-900 { color: #0f172a; }
-        .border-navy-900 { border-color: #0f172a; }
-        
-        /* Loading animation */
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #0f172a;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-    <!-- HEADER / NAVBAR (Navy Blue) -->
+    <!-- HEADER -->
     <header class="bg-[#0f172a] text-white p-4 shadow-md">
         <div class="container mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- Logo placeholder (replace 'src' with your real logo URL if needed) -->
-                <img src="logo.jpeg.jpeg" alt="Logo CODE MASTER" class="h-10 w-10 rounded-lg">
+                <img src="logo.jpeg.jpeg" alt="Logo" class="h-10 w-10 rounded-lg object-contain bg-white/10 p-1" onerror="this.src='https://via.placeholder.com/40/ffffff/000000?text=CM'">
                 <div>
                     <h1 class="text-xl font-bold tracking-tight">CODE MASTER</h1>
                     <p class="text-xs text-gray-300">Satu baris code menembus dunia</p>
                 </div>
             </div>
-            <span class="text-sm bg-white/10 px-3 py-1 rounded-full text-gray-200 hidden md:inline">Portal Absensi</span>
+            <span class="text-xs bg-emerald-500 text-white font-semibold px-3 py-1 rounded-full">Sistem NIS</span>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="container mx-auto p-4 md:p-8">
-        <div class="max-w-3xl mx-auto">
+    <!-- FORM UTAMA -->
+    <main class="container mx-auto p-4 md:p-8 max-w-xl">
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
             
-            <!-- Welcome Card -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">Presensi Siswa</h2>
+            <p class="text-sm text-gray-500 mb-6">Masukkan NIS Anda untuk verifikasi identitas.</p>
+
+            <form id="absenForm" class="space-y-5">
+                
+                <!-- Input NIS + Tombol Cek -->
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Selamat Datang!</h2>
-                    <p class="text-gray-600 mt-1">Silakan isi formulir kehadiran ekstrakurikuler di bawah ini.</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-xl text-center border border-gray-200">
-                    <p class="text-xs text-gray-500 uppercase font-semibold">Waktu Sekarang</p>
-                    <p id="liveClock" class="text-lg font-bold text-navy-900 mt-1">--:--:--</p>
-                    <p id="liveDate" class="text-sm text-gray-700">-- --- ----</p>
-                </div>
-            </div>
-
-            <!-- FORM ABSENSI -->
-            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-                <form id="absenForm" class="space-y-6">
-                    
-                    <!-- Input Nama -->
-                    <div>
-                        <label for="nama" class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
-                        <input type="text" id="nama" name="nama" required 
-                               placeholder="Contoh: Budi Pratama"
-                               class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy-900 focus:border-navy-900 transition-all text-gray-900">
-                    </div>
-
-                    <!-- Input Kelas -->
-                    <div>
-                        <label for="kelas" class="block text-sm font-semibold text-gray-700 mb-2">Kelas</label>
-                        <input type="text" id="kelas" name="kelas" required 
-                               placeholder="Contoh: X IPA 2 / XII IPS 1"
-                               class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy-900 focus:border-navy-900 transition-all text-gray-900">
-                    </div>
-
-                    <!-- Input Status (Radio Buttons Modern) -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-3">Status Kehadiran</label>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            
-                            <label class="relative flex items-center p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 peer-checked:border-navy-900 peer-checked:bg-navy-50">
-                                <input type="radio" name="status" value="Hadir" required class="peer h-5 w-5 text-navy-900 border-gray-300 focus:ring-navy-900">
-                                <span class="ml-3 font-medium text-gray-900">Hadir ✅</span>
-                                <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-[#0f172a] pointer-events-none"></div>
-                            </label>
-
-                            <label class="relative flex items-center p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 peer-checked:border-amber-600 peer-checked:bg-amber-50">
-                                <input type="radio" name="status" value="Izin" class="peer h-5 w-5 text-amber-600 border-gray-300 focus:ring-amber-500">
-                                <span class="ml-3 font-medium text-gray-900">Izin ✉️</span>
-                                <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-amber-600 pointer-events-none"></div>
-                            </label>
-
-                            <label class="relative flex items-center p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 peer-checked:border-red-600 peer-checked:bg-red-50">
-                                <input type="radio" name="status" value="Sakit" class="peer h-5 w-5 text-red-600 border-gray-300 focus:ring-red-500">
-                                <span class="ml-3 font-medium text-gray-900">Sakit 🤢</span>
-                                <div class="absolute inset-0 rounded-xl peer-checked:border-2 peer-checked:border-red-600 pointer-events-none"></div>
-                            </label>
-
-                        </div>
-                    </div>
-
-                    <!-- Input Catatan (Optional) -->
-                    <div>
-                        <label for="catatan" class="block text-sm font-semibold text-gray-700 mb-2">Catatan / Keterangan (Opsional)</label>
-                        <textarea id="catatan" name="catatan" rows="3" 
-                                  placeholder="Tulis alasan jika Izin/Sakit..."
-                                  class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-navy-900 focus:border-navy-900 transition-all text-gray-900"></textarea>
-                    </div>
-
-                    <!-- Tombol Kirim -->
-                    <div class="pt-4">
-                        <button type="submit" id="submitBtn"
-                                class="w-full bg-[#0f172a] hover:bg-black text-white font-bold py-4 px-6 rounded-xl shadow-md transition-all flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed">
-                            <span id="btnText">Kirim Absen Sekarang</span>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nomor Induk Siswa (NIS)</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="nis" name="nis" required placeholder="Contoh: 1001"
+                               class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#0f172a] outline-none text-gray-900">
+                        <button type="button" id="btnCekNis" onclick="checkNIS()" 
+                                class="bg-[#0f172a] hover:bg-black text-white px-5 py-3 rounded-xl font-semibold text-sm transition">
+                            Cek
                         </button>
                     </div>
-                </form>
-            </div>
+                    <p id="nisStatus" class="text-xs mt-1.5 hidden"></p>
+                </div>
 
-            <!-- Footer -->
-            <footer class="mt-12 pb-6 text-center text-gray-500 text-sm">
-                &copy; 2024 CODE MASTER. All rights reserved.<br>
-                <span class="italic">"Satu baris code menembus dunia"</span>
-            </button>
+                <!-- Nama Lengkap (Auto-Fill) -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" readonly placeholder="Terisi otomatis..."
+                           class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-600 cursor-not-allowed">
+                </div>
 
+                <!-- Kelas (Auto-Fill) -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Kelas</label>
+                    <input type="text" id="kelas" name="kelas" readonly placeholder="Terisi otomatis..."
+                           class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-600 cursor-not-allowed">
+                </div>
+
+                <!-- Status Kehadiran -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Status Kehadiran</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="status" value="Hadir" checked class="peer hidden">
+                            <div class="text-center py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 peer-checked:bg-emerald-600 peer-checked:text-white peer-checked:border-emerald-600 transition">
+                                Hadir ✅
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="status" value="Izin" class="peer hidden">
+                            <div class="text-center py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 peer-checked:bg-amber-500 peer-checked:text-white peer-checked:border-amber-500 transition">
+                                Izin ✉️
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="status" value="Sakit" class="peer hidden">
+                            <div class="text-center py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 peer-checked:bg-red-500 peer-checked:text-white peer-checked:border-red-500 transition">
+                                Sakit 🤢
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Catatan -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Catatan / Keterangan</label>
+                    <textarea id="catatan" name="catatan" rows="2" placeholder="Isi alasan jika Izin/Sakit..."
+                              class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#0f172a] outline-none text-sm"></textarea>
+                </div>
+
+                <!-- Tombol Submit -->
+                <button type="submit" id="submitBtn" disabled
+                        class="w-full bg-[#0f172a] hover:bg-black text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition opacity-50 cursor-not-allowed">
+                    <span id="btnText">Kirim Absen</span>
+                </button>
+
+            </form>
         </div>
     </main>
 
-    <!-- NOTIFIKASI POPUP (Sukses/Gagal) -->
-    <div id="notification" class="fixed bottom-5 right-5 transform translate-y-full opacity-0 transition-all duration-300 ease-in-out z-50 max-w-sm w-full">
-        <div id="notifContent" class="p-4 rounded-xl shadow-2xl text-white flex items-start gap-3">
-            <span id="notifIcon" class="text-2xl"></span>
-            <div>
-                <h4 id="notifTitle" class="font-bold"></h4>
-                <p id="notifMessage" class="text-sm opacity-90"></p>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // --- 1. Jam & Tanggal Live (Real-time) ---
-        function updateDateTime() {
-            const now = new Date();
-            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            
-            document.getElementById('liveClock').textContent = now.toLocaleTimeString('id-ID');
-            document.getElementById('liveDate').textContent = now.toLocaleDateString('id-ID', optionsDate);
-        }
-        setInterval(updateDateTime, 1000);
-        updateDateTime(); // Jalankan sekali saat load
+        // PASTE URL WEB APP APPS SCRIPT BARU ANDA DI SINI
+        const GAS_URL = "GANTI_DENGAN_URL_DEPLOY_GAS_ANDA";
 
-
-        // --- 2. Handling Form & Pengiriman Data ---
-        const form = document.getElementById('absenForm');
+        const btnCek = document.getElementById('btnCekNis');
+        const nisStatus = document.getElementById('nisStatus');
+        const inputNama = document.getElementById('nama');
+        const inputKelas = document.getElementById('kelas');
         const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const notif = document.getElementById('notification');
 
-        // GANTI INI DENGAN URL DARI GOOGLE APPS SCRIPT ANDA!!!
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbw5Ij_GEzTNmms7fMcGSz5fepcUxXUMGz-FU7OsOwnNgie72S1n6eXaBztwz0t5TFiP/exec";
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
-
-            // Aktifkan State Loading
-            submitBtn.disabled = true;
-            btnText.innerHTML = '<span class="loader"></span> Mengirim data...';
-
-            // Ambil data dari form
-            const formData = new FormData(form);
-            const dataObj = {};
-            formData.forEach((value, key) => { dataObj[key] = value; });
-
-            // Kirim data menggunakan Fetch API (metode POST)
-            fetch(GAS_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Penting untuk CORS ke Google Apps Script
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataObj)
-            })
-            .then(response => {
-                // Karena mode 'no-cors', kita tidak bisa baca respon JSON asli. 
-                // Kita asumsikan sukses jika tidak ada error jaringan.
-                showNotification('sukses', 'Berhasil!', 'Absensi Anda telah tercatat di Google Sheets.');
-                form.reset(); // Kosongkan form
-                updateDateTime(); // Reset waktu tampilan
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('gagal', 'Waduh!', 'Terjadi kesalahan jaringan. Coba lagi nanti.');
-            })
-            .finally(() => {
-                // Kembalikan tombol ke keadaan normal
-                submitBtn.disabled = false;
-                btnText.textContent = 'Kirim Absen Sekarang';
-            });
-        });
-
-        // --- 3. Fungsi Notifikasi Popup Modern ---
-        function showNotification(type, title, message) {
-            const notifContent = document.getElementById('notifContent');
-            const notifIcon = document.getElementById('notifIcon');
-            const notifTitle = document.getElementById('notifTitle');
-            const notifMessage = document.getElementById('notifMessage');
-
-            // Set styling berdasarkan tipe
-            if (type === 'sukses') {
-                notifContent.className = 'p-4 rounded-xl shadow-2xl text-white flex items-start gap-3 bg-emerald-600';
-                notifIcon.textContent = '✅';
-            } else {
-                notifContent.className = 'p-4 rounded-xl shadow-2xl text-white flex items-start gap-3 bg-red-600';
-                notifIcon.textContent = '❌';
+        // 1. Cek NIS ke Google Sheets
+        function checkNIS() {
+            const nis = document.getElementById('nis').value;
+            if (!nis) {
+                showStatus("Masukkan NIS terlebih dahulu!", "red");
+                return;
             }
 
-            // Set teks
-            notifTitle.textContent = title;
-            notifMessage.textContent = message;
+            btnCek.innerText = "...";
+            btnCek.disabled = true;
 
-            // Munculkan notifikasi (slide in)
-            notif.classList.remove('translate-y-full', 'opacity-0');
-            
-            // Hilangkan otomatis setelah 4 detik
-            setTimeout(() => {
-                notif.classList.add('translate-y-full', 'opacity-0');
-            }, 4000);
+            fetch(`${GAS_URL}?action=checkNIS&nis=${nis}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        inputNama.value = data.nama;
+                        inputKelas.value = data.kelas;
+                        showStatus(` Siswa ditemukan: ${data.nama}`, "green");
+                        
+                        // Aktifkan tombol kirim
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    } else {
+                        resetFormAuto();
+                        showStatus("❌ NIS tidak terdaftar di sistem!", "red");
+                    }
+                })
+                .catch(err => {
+                    showStatus("❌ Gagal terhubung ke server.", "red");
+                })
+                .finally(() => {
+                    btnCek.innerText = "Cek";
+                    btnCek.disabled = false;
+                });
         }
+
+        function showStatus(msg, color) {
+            nisStatus.innerText = msg;
+            nisStatus.classList.remove('hidden', 'text-red-600', 'text-emerald-600');
+            nisStatus.classList.add(color === "red" ? 'text-red-600' : 'text-emerald-600');
+        }
+
+        function resetFormAuto() {
+            inputNama.value = "";
+            inputKelas.value = "";
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        // 2. Submit Absen
+        document.getElementById('absenForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            document.getElementById('btnText').innerText = "Mengirim...";
+
+            const payload = {
+                nis: document.getElementById('nis').value,
+                nama: inputNama.value,
+                kelas: inputKelas.value,
+                status: document.querySelector('input[name="status"]:checked').value,
+                catatan: document.getElementById('catatan').value
+            };
+
+            fetch(GAS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                alert("✅ Absen Berhasil Dicatat!");
+                document.getElementById('absenForm').reset();
+                resetFormAuto();
+                nisStatus.classList.add('hidden');
+            })
+            .catch(err => alert("Gagal mengirim data."))
+            .finally(() => {
+                document.getElementById('btnText').innerText = "Kirim Absen";
+            });
+        });
     </script>
 </body>
 </html>
